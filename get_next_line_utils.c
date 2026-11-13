@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ppoco <marvin.42.fr>                       +#+  +:+       +#+        */
+/*   By: ppoco <ppoco@student.42lisboa.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026-11-12 15:08:12 by ppoco             #+#    #+#             */
-/*   Updated: 2026-11-12 15:08:12 by ppoco            ###   ########.fr       */
+/*   Created: 2026-11-13 18:33:30 by ppoco             #+#    #+#             */
+/*   Updated: 2026-11-13 18:33:30 by ppoco            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "get_next_line.h"
 
 size_t	ft_strlen(const char *s)
