@@ -25,9 +25,9 @@
 char		*get_next_line(int fd);
 
 /*  Utils  */
-char		*grab_joined_buffer(char *static_buffer, int fd);
+char		*grab_joined_buffer(char *buffer, int fd);
+size_t		ft_strlcpy(char *dst, const char *src, size_t size);
 size_t		ft_strlen(const char *s);
-char		*ft_strchr(const char *s, int c);
 char		*ft_strjoin(char *s1, const char *s2);
 char		*ft_substr(const char *s, size_t start, size_t len);
 

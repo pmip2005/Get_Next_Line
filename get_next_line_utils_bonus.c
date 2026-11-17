@@ -22,20 +22,19 @@ size_t	ft_strlen(const char *s)
 	return (i);
 }
 
-char	*ft_strchr(const char *s, int c)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
 	size_t	i;
 
 	i = 0;
-	while (s[i])
+	while (size && i + 1 < size && src[i])
 	{
-		if (s[i] == (char)c)
-			return ((char *)(s + i));
-		++i;
+		dst[i] = src[i];
+		i++;
 	}
-	if (s[i] == (char)c)
-		return ((char *)(s + i));
-	return (NULL);
+	if (size)
+		dst[i] = '\0';
+	return (ft_strlen(src));
 }
 
 char	*ft_strjoin(char *s1, const char *s2)
@@ -94,30 +93,26 @@ char	*ft_substr(const char *s, size_t start, size_t len)
 	return (substr);
 }
 
-char	*grab_joined_buffer(char *static_buffer, int fd)
+char	*grab_joined_buffer(char *buffer, int fd)
 {
-	char	temp[BUFFER_SIZE + 1];
+	char	*joined;
 	ssize_t	i;
 
-	i = 0;
-	while (i <= BUFFER_SIZE)
+	joined = ft_substr(buffer, 0, ft_strlen(buffer) + 1);
+	while (joined)
 	{
-		temp[i] = 0;
-		i++;
+		i = 0;
+		while (joined[i] && joined[i] != '\n')
+			i++;
+		if (joined[i] == '\n')
+			return (joined);
+		i = read(fd, buffer, BUFFER_SIZE);
+		if (i < 0 || (!i && !joined[0]))
+			return (free(joined), NULL);
+		if (!i)
+			return (joined);
+		buffer[i] = '\0';
+		joined = ft_strjoin(joined, buffer);
 	}
-	i = 1;
-	while (i && (!static_buffer || !ft_strchr(static_buffer, '\n')))
-	{
-		i = read(fd, temp, BUFFER_SIZE);
-		if (i < 0 || (!i && !static_buffer))
-			return (free(static_buffer), NULL);
-		temp[i] = '\0';
-		if (!static_buffer)
-			static_buffer = ft_substr(temp, 0, ft_strlen(temp));
-		else
-			static_buffer = ft_strjoin(static_buffer, temp);
-		if (!static_buffer)
-			return (free(static_buffer), NULL);
-	}
-	return (static_buffer);
+	return (NULL);
 }

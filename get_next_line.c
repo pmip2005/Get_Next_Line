@@ -14,42 +14,24 @@
 
 char	*get_next_line(int fd)
 {
-	static char	*feed;
-	char		*temp;
+	static char	buffer[BUFFER_SIZE + 1];
+	char		*feed;
 	char		*this_line;
 	size_t		i;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	feed = grab_joined_buffer(feed, fd);
-	if (!feed || !feed[0])
-		return (NULL);
+	feed = grab_joined_buffer(buffer, fd);
+	if (!feed)
+		return (buffer[0] = '\0', NULL);
 	i = 0;
 	while (feed[i] && feed[i] != '\n')
 		i++;
 	if (feed[i] == '\n')
 		i++;
 	this_line = ft_substr(feed, 0, i);
-	temp = NULL;
-	if (this_line && feed[i])
-		temp = ft_substr(feed, i, ft_strlen(feed));
-	if (!this_line || (feed[i] && !temp))
-		return (free(this_line), free(feed),
-			feed = NULL, NULL);
-	free(feed);
-	feed = temp;
-	return (this_line);
+	if (!this_line)
+		return (free(feed), buffer[0] = '\0', NULL);
+	return (ft_strlcpy(buffer, feed + i, BUFFER_SIZE + 1),
+		free(feed), this_line);
 }
-// #include <fcntl.h>
-// #include <stdio.h>
-// int main()
-// {
-// 	char *line;
-// 	int fd = open("t.txt", O_RDONLY);
-// 	line = get_next_line(fd);
-// 	printf("%s", line);
-// 	free(line);
-// 	close(fd);
-
-// 	return 0;
-// }
