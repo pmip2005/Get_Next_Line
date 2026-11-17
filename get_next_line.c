@@ -40,3 +40,16 @@ char	*get_next_line(int fd)
 	feed = temp;
 	return (this_line);
 }
+// #include <fcntl.h>
+// #include <stdio.h>
+// int main()
+// {
+// 	char *line;
+// 	int fd = open("t.txt", O_RDONLY);
+// 	line = get_next_line(fd);
+// 	printf("%s", line);
+// 	free(line);
+// 	close(fd);
+
+// 	return 0;
+// }
